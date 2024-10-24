@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\PanelController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -8,8 +10,13 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return to_route('panel');
+//    return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('admin', [PanelController::class, 'index'])->name('panel');
+
+Route::resource('admin/users', UserController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('admin', function (){
