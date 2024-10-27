@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\EditUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -13,8 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(15);
-        return view('admin.user.list', compact('users'));
+        $title = 'لیست کاربران';
+        return view('admin.user.list', compact('title'));
     }
 
     /**
@@ -22,23 +25,25 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create');
+        $title = 'ایجاد کاربر';
+        return view('admin.user.create', compact('title'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
+        $image = User::saveImage($request->file);
         User::query()->create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
+            'password' => Hash::make($request->input('password')),
             'mobile' => $request->input('mobile'),
-            'photo' => $request->input('photo'),
+            'photo' => $image,
         ]);
 
-        return redirect()->back()->with('success', 'کاربر جدید با موفقیت ثبت شد');
+        return to_route('users.index')->with('success', 'کاربر جدید با موفقیت ثبت شد');
     }
 
     /**
@@ -52,17 +57,29 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $title = 'ویرایش کاربر';
+        $user = User::query()->find($id);
+        return view('admin.user.edit', compact('user', 'title'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditUserRequest $request, $id)
     {
-        //
+        $user = User::query()->find($id);
+        $image = User::saveImage($request->file);
+        $user->update([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password') ? Hash::make($request->input('password')) : $user->password,
+            'mobile' => $request->input('mobile'),
+            'photo' => $image,
+        ]);
+
+        return to_route('users.index')->with('success', 'کاربر جدید با موفقیت ویرایش شد');
     }
 
     /**
