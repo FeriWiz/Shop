@@ -15,10 +15,13 @@ Route::get('/dashboard', function () {
 //    return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('admin', [PanelController::class, 'index'])->name('panel');
-    Route::resource('admin/users', UserController::class);
-    Route::resource('admin/roles', RoleController::class);
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/', [PanelController::class, 'index'])->name('panel');
+    Route::resource('/users', UserController::class);
+    Route::resource('/roles', RoleController::class);
+    Route::get('create_user_role/{id}', [UserController::class, 'createUserRole'])->name('create_user_roles');
+    Route::post('create_user_role/{id}', [UserController::class, 'storeUserRole'])->name('store_user_roles');
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

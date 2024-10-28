@@ -1,11 +1,13 @@
 <div class="navigation">
     <div class="navigation-icon-menu">
         <ul>
+            @hasanyrole('مدیر سایت')
             <li data-toggle="tooltip" title="کاربران">
                 <a href="#users" title=" کاربران">
                     <i class="icon ti-user"></i>
                 </a>
             </li>
+            @endhasanyrole
         </ul>
         <ul>
             <li data-toggle="tooltip" title="ویرایش پروفایل">
