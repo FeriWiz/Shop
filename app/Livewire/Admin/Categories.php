@@ -19,12 +19,4 @@ class Categories extends Component
         paginate(10);
         return view('livewire.admin.categories', compact('categories'));
     }
-
-    public function deleteCategory($id)
-    {
-
-        $this->dispatchBrowserEvent('deleteCategory', ['id' => $id]);
-
-    }
-
 }
