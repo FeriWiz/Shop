@@ -8,6 +8,12 @@
                 </a>
             </li>
             @endhasanyrole
+
+            <li data-toggle="tooltip" title="محصولات">
+                <a href="#products" title="محصولات">
+                    <i class="icon ti-folder"></i>
+                </a>
+            </li>
         </ul>
         <ul>
             <li data-toggle="tooltip" title="ویرایش پروفایل">
@@ -38,6 +44,22 @@
                     <li><a href="{{route('roles.index')}}">لیست نقش ها</a></li>
                 </ul>
             </li>
+            <li>
+                <a href="#">لاگ ها</a>
+                <ul>
+                    <li><a href="{{route('logs')}}">لیست لاگ ها</a></li>
+                </ul>
+            </li>
         </ul>
+        <ul id="products">
+            <li>
+                <a href="#">دسته بندی</a>
+                <ul>
+                    <li><a href="{{route('category.create')}}">ایجاد دسته بندی</a></li>
+                    <li><a href="{{route('category.index')}}">لیست دسته بندی ها</a></li>
+                </ul>
+            </li>
+        </ul>
+
     </div>
 </div>
