@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{url('panel/vendors/select2/css/select2.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{url('panel/vendors/select2/css/select2.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{url('panel/vendors/colorpicker/css/bootstrap-colorpicker.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{url('panel/plugins/datepicker/kamadatepicker.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{url('panel/plugins/dropzone/css/dropzone.css')}}" type="text/css">
 </head>
 <body class="small-navigation">
 
@@ -32,6 +34,9 @@
 <script src="{{url('panel/vendors/vmap/jquery.vmap.min.js')}}"></script>
 <script src="{{url('panel/assets/js/app.js')}}"></script>
 <script src="{{url('panel/vendors/colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
+<script src="{{url('panel/plugins/datepicker/kamadatepicker.min.js')}}"></script>
+<script src="{{url('panel/plugins/ckeditor/ckeditor.js')}}"></script>
+<script src="{{url('panel/plugins/dropzone/js/dropzone.js')}}"></script>
 @yield('scripts')
 </body>
 </html>

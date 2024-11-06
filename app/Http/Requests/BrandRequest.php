@@ -23,7 +23,7 @@ class BrandRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:255',
+            'image' => 'null|image|mimes:jpeg,png,jpg,gif,svg|max:255',
         ];
     }
 }

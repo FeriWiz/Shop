@@ -1006,7 +1006,7 @@ JustGage.prototype.generateShadow = function(svg, defs) {
 };
 
 //
-// tiny helper function to lookup value of a key from two hash tables
+// tiny helper.php function to lookup value of a key from two hash tables
 // if none found, return defaultvalue
 //
 // key: string
