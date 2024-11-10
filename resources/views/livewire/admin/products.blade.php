@@ -24,9 +24,15 @@
             <tr>
                 <td class="text-center align-middle">{{$products->firstItem() + $index}}</td>
                 <td class="text-center align-middle">
-                    <figure class="avatar avatar">
-                        <img src="{{url('images/admin/products/big/'.$product->image)}}" class="rounded-circle" alt="image">
-                    </figure>
+                    @if($product->image)
+                        <figure class="avatar avatar">
+                            <img src="{{url('images/admin/products/big/'.$product->image)}}" class="rounded-circle" alt="image">
+                        </figure>
+                    @else
+                        <div style="color: red">
+                            بدون عکس
+                        </div>
+                    @endif
                 </td>
                 <td class="text-center align-middle">{{$product->title}}</td>
                 <td class="text-center align-middle">{{$product->price}}</td>

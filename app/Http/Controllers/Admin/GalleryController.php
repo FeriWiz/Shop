@@ -25,4 +25,15 @@ class GalleryController extends Controller
 
         return redirect()->back()->with('success', 'عکس با موفقیت ذخیر شد');
     }
+
+    public function deleteGallery($id)
+    {
+        $gallery = Gallery::query()->findOrFail($id);
+        $path1 = public_path().'/images/admin/products/big/'.$gallery->image;
+        $path2 = public_path().'/images/admin/products/small/'.$gallery->image;
+        unlink($path1);
+        unlink($path2);
+        $gallery->delete();
+        return redirect()->back();
+    }
 }
