@@ -98,6 +98,20 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">انتخاب رنگ</label>
+                            <div class="col-sm-10">
+                                <select class="form-select select2-multiple" multiple name="colors[]" style="width: 100%; text-align: right;">
+                                    @foreach($colors as $key => $value)
+                                        @if(in_array($key, $product->colors()->pluck('id')->toArray()))
+                                            <option selected value="{{$key}}">{{$value}}</option>
+                                        @else
+                                            <option value="{{$key}}">{{$value}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="file"> آپلود عکس </label>
                             <input  class="col-sm-10" type="file" class="form-control-file" id="file" name="file">
                         </div>
@@ -117,7 +131,9 @@
     <script>
         $('form-select').select2();
 
-
+        $(document).ready(function() {
+            $('.form-select').select2(); // فعال‌سازی Select2 برای همه‌ی عناصر با کلاس form-select
+        });
         var customOptions = {
             placeholder: "روز / ماه / سال"
             , twodigit: false

@@ -37,6 +37,11 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
+    public function colors()
+    {
+        return $this->belongsToMany(Color::class, 'color_product');
+    }
+
     public static function saveImage($file){
         if($file){
             $name = time().'.'.$file->extension();

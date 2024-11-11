@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
@@ -29,7 +30,8 @@ class ProductController extends Controller
         $title = 'اضافه کردن محصول';
         $categories = Category::query()->pluck('title', 'id');
         $brands = Brand::query()->pluck('title', 'id');
-        return view('admin.product.create', compact('title', 'categories', 'brands'));
+        $colors = Color::query()->pluck('title', 'id');
+        return view('admin.product.create', compact('title', 'categories', 'brands', 'colors'));
     }
 
     /**
@@ -38,10 +40,10 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $image = Product::saveImage($request->file);
-        Product::query()->create([
+        $product = Product::query()->create([
             'title' => $request->input('title'),
             'title_en' => $request->input('title_en'),
-            'slug' => Helper::make_slug($request->input('title')),
+            'slug' => Helper::make_slug($request->input('title_en')),
             'price' => $request->input('price'),
             'count' => $request->input('count'),
             'image' => $image,
@@ -53,6 +55,9 @@ class ProductController extends Controller
             'category_id' => $request->input('category_id'),
             'brand_id' => $request->input('brand_id'),
         ]);
+
+        $colors = $request->input('colors');
+        $product->colors()->attach($colors);
 
         return to_route('products.index')->with('success', 'محصول با موفقیت ایجاد شد');
     }
@@ -74,8 +79,9 @@ class ProductController extends Controller
         $product = Product::query()->findOrFail($id);
         $categories = Category::query()->pluck('title', 'id');
         $brands = Brand::query()->pluck('title', 'id');
+        $colors = Color::query()->pluck('title', 'id');
 
-        return view('admin.product.edit', compact('title', 'categories', 'brands', 'product'));
+        return view('admin.product.edit', compact('title', 'categories', 'brands', 'product', 'colors'));
     }
 
     /**
@@ -89,7 +95,7 @@ class ProductController extends Controller
         Product::query()->update([
             'title' => $request->input('title'),
             'title_en' => $request->input('title_en'),
-            'slug' => Helper::make_slug($request->input('title')),
+            'slug' => Helper::make_slug($request->input('title_en')),
             'price' => $request->input('price'),
             'count' => $request->input('count'),
             'image' => $image,
@@ -101,6 +107,9 @@ class ProductController extends Controller
             'category_id' => $request->input('category_id'),
             'brand_id' => $request->input('brand_id'),
         ]);
+
+        $colors = $request->input('colors');
+        $product->colors()->sync($colors);
 
         return to_route('products.index')->with('success', 'محصول با موفقیت ویرایش شد');
     }

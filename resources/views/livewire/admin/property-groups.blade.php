@@ -9,36 +9,24 @@
         <thead class="thead-light">
         <tr>
             <th class="text-center align-middle text-primary">ردیف</th>
-            <th class="text-center align-middle text-primary">عکس</th>
-            <th class="text-center align-middle text-primary">نام برند</th>
+            <th class="text-center align-middle text-primary">نام گروه ویژگی ها</th>
             <th class="text-center align-middle text-primary">ویرایش</th>
             <th class="text-center align-middle text-primary">حذف</th>
             <th class="text-center align-middle text-primary">تاریخ ایجاد</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($brands as $index => $brand)
+        @foreach($property_groups as $index => $property_group)
             <tr>
-                <td class="text-center align-middle">{{$brands->firstItem() + $index}}</td>
+                <td class="text-center align-middle">{{$property_groups->firstItem() + $index}}</td>
+                <td class="text-center align-middle">{{$property_group->title}}</td>
                 <td class="text-center align-middle">
-                    @if($brand->image)
-                        <figure class="avatar avatar">
-                            <img src="{{url('images/admin/brands/big/'.$brand->image)}}" class="rounded-circle" alt="image">
-                        </figure>
-                    @else
-                        <div style="color: red">
-                            بدون عکس
-                        </div>
-                    @endif
-                </td>
-                <td class="text-center align-middle">{{$brand->title}}</td>
-                <td class="text-center align-middle">
-                    <a class="btn btn-outline-info" href="{{route('brands.edit', $brand->id)}}">
+                    <a class="btn btn-outline-info" href="{{route('property_groups.edit', $property_group->id)}}">
                         ویرایش
                     </a>
                 </td>
                 <td class="text-center align-middle">
-                    <form action="{{ route('brands.destroy', $brand->id) }}" method="POST" onsubmit="return confirm('آیا مطمئن هستید؟');">
+                    <form action="{{ route('property_groups.destroy', $property_group->id) }}" method="POST" onsubmit="return confirm('آیا مطمئن هستید؟');">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-outline-danger">حذف</button>
@@ -46,14 +34,14 @@
                 </td>
 
                 <td class="text-center align-middle">
-                    {{Verta::instance($brand->created_at)->format('%d, %B, %Y')}}
+                    {{Verta::instance($property_group->created_at)->format('%d, %B, %Y')}}
                 </td>
             </tr>
         @endforeach
     </table>
     <div style="margin: 40px !important;"
          class="pagination pagination-rounded pagination-sm d-flex justify-content-center">
-        {{$brands->appends(Request::except('page'))->links()}}
+        {{$property_groups->appends(Request::except('page'))->links()}}
     </div>
 </div>
 
