@@ -14,6 +14,7 @@
             <th class="text-center align-middle text-primary"> قیمت</th>
             <th class="text-center align-middle text-primary"> تعداد</th>
             <th class="text-center align-middle text-primary">گالری</th>
+            <th class="text-center align-middle text-primary">ویژگی ها</th>
             <th class="text-center align-middle text-primary">ویرایش</th>
             <th class="text-center align-middle text-primary">حذف</th>
             <th class="text-center align-middle text-primary">تاریخ ایجاد</th>
@@ -40,6 +41,11 @@
                 <td class="text-center align-middle">
                     <a class="btn btn-outline-info" href="{{route('product.gallery.create', $product->id)}}">
                         گالری
+                    </a>
+                </td>
+                <td class="text-center align-middle">
+                    <a class="btn btn-outline-info" href="{{route('product.properties.create', $product->id)}}">
+                        ویژگی ها
                     </a>
                 </td>
                 <td class="text-center align-middle">

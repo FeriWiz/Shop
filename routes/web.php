@@ -13,18 +13,23 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('/forbidden', function () {
+    return value('index');
+})->name('forbidden');
+
 Route::get('/dashboard', function () {
     return to_route('panel');
 //    return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::prefix('admin')->middleware('auth')->group(function () {
+Route::prefix('admin')->middleware(['auth', AdminMiddleware::class])->group(function () {
 
     Route::get('/', [PanelController::class, 'index'])->name('panel');
 
@@ -51,9 +56,13 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::resource('properties', PropertyController::class);
 
-    Route::get('create_product_gallery{id}', [GalleryController::class, 'addGallery'])->name('product.gallery.create');
-    Route::post('create_product_gallery{id}', [GalleryController::class, 'storeGallery'])->name('product.gallery.store');
-    Route::delete('delete_product_gallery{id}', [GalleryController::class, 'deleteGallery'])->name('product.gallery.delete');
+    Route::get('create_product_properties/{id}', [ProductController::class, 'addProperties'])->name('product.properties.create');
+    Route::post('create_product_properties/{id}', [ProductController::class, 'storeProperties'])->name('product.properties.store');
+
+
+    Route::get('create_product_gallery/{id}', [GalleryController::class, 'addGallery'])->name('product.gallery.create');
+    Route::post('create_product_gallery/{id}', [GalleryController::class, 'storeGallery'])->name('product.gallery.store');
+    Route::delete('delete_product_gallery/{id}', [GalleryController::class, 'deleteGallery'])->name('product.gallery.delete');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Product;
+use App\Models\PropertyGroup;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 
@@ -112,6 +113,21 @@ class ProductController extends Controller
         $product->colors()->sync($colors);
 
         return to_route('products.index')->with('success', 'محصول با موفقیت ویرایش شد');
+    }
+
+    public function addProperties(string $id)
+    {
+        $product = Product::query()->findOrFail($id);
+        $property_groups = PropertyGroup::query()->get();
+        return view('admin.product.create_property', compact('property_groups', 'product'));
+    }
+
+    public function storeProperties($id, Request $request)
+    {
+        $product = Product::query()->findOrFail($id);
+        $product->properties()->sync($request->properties);
+
+        return to_route('products.index')->with('success', 'ویژگی ها با موفقیت اضافه شد');
     }
 
     /**

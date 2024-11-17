@@ -19,4 +19,9 @@ class Property extends Model
         return $this->belongsTo(PropertyGroup::class, 'property_group_id', 'id');
     }
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_property');
+    }
+
 }
