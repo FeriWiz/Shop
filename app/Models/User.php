@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use http\Env\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -55,6 +56,27 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    public static function updateUserInfo($user, $request)
+    {
+        $image = self::saveImage($request->file);
+        $user->update([
+            'name' => $request->input('name'),
+            'phone' => $request->input('phone'),
+            'photo' => '$image'
+        ]);
+        $user->addresses()->create([
+            'address' => $request->input('address'),
+            'postal_code' => $request->input('postal_code'),
+            'lat' => $request->input('lat'),
+            'lng' => $request->input('lng'),
+        ]);
     }
 
     public static function saveImage($file){
