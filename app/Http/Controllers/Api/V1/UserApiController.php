@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repositories\UserRepository;
 use App\Http\Resources\UserResource;
+use App\Http\Services\keys;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -95,5 +97,45 @@ class UserApiController extends Controller
                 ]
             ], 403);
         }
+    }
+
+
+    /**
+     * @OA\Get (
+     * path="/api/v1/profile",
+     *   tags={"User info"},
+     *   security={{"sanctum":{}}},
+     *   @OA\Response(
+     *      response=200,
+     *      description="It's Ok",
+     *      @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *   )
+     *)
+     **/
+    public function profile()
+    {
+        $user = auth()->user();
+        return response()->json([
+            'result' => true,
+            'message' => 'User profile',
+            'date' => [
+                keys::user => new UserResource($user),
+                keys::user_process_count => UserRepository::processingUserOrderCount($user),
+                keys::user_received_count => UserRepository::receiverUserOrderCount($user),
+                keys::user_rejected_count => UserRepository::rejectedUserOrderCount($user),
+            ]
+        ], 200);
+    }
+
+    public function receivedOrders()
+    {
+        $user = auth()->user();
+        return response()->json([
+            'result' => true,
+            'message' => 'User received orders',
+            'date' => UserRepository::receiverUserOrder($user)
+        ], 200);
     }
 }

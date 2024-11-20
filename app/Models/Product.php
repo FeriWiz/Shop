@@ -47,6 +47,11 @@ class Product extends Model
         return $this->belongsToMany(Property::class, 'product_property');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public static function saveImage($file){
         if($file){
             $name = time().'.'.$file->extension();

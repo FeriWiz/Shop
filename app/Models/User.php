@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->hasMany(Address::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public static function updateUserInfo($user, $request)
     {
         $image = self::saveImage($request->file);

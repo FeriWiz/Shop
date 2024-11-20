@@ -32,6 +32,9 @@ class ProductResource extends JsonResource
             'brand_id' => $this['brand_id'],
             'brand' => $this->brand->title,
             'sold' => $this['sold'],
+            'comments' => CommentResource::collection($this['comments']),
+            'colors' => ColorResource::collection($this['colors']),
+            'properties' => PropertyResource::collection($this['properties']),
         ];
     }
 }

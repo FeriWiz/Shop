@@ -16,4 +16,9 @@ class keys
     const most_expensive_products = 'most_expensive_products';
     const products_by_category = 'products_by_category';
     const products_by_brand = 'products_by_brand';
+    const search_products = 'search_products';
+    const user = 'user';
+    const user_process_count  = 'user_process_count';
+    const user_received_count = 'user_received_count';
+    const user_rejected_count = 'user_rejected_count';
 }
